@@ -2,49 +2,54 @@
 
 ![Grid Banner](readme-assets/banner.png)
 
-> **Comprehensive documentation for Grid Platform** - Everything you need to know about the Infrastructure Orchestration Platform
+> Canonical documentation for **Grid Platform** — install, operate, and extend the infrastructure orchestration stack.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Docusaurus](https://img.shields.io/badge/Docusaurus-2E8555?logo=docusaurus&logoColor=white)](https://docusaurus.io/)
-[![Documentation](https://img.shields.io/badge/Documentation-4CAF50?logo=gitbook&logoColor=white)](https://docs.gridplatform.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Docs site](https://img.shields.io/badge/docs-docs.gridplatform.org-4CAF50)](https://docs.gridplatform.org)
 
-## 🎯 Purpose
+## Source of truth
 
-Grid Docs is the comprehensive documentation site for the Grid Infrastructure Orchestration Platform. Built with Docusaurus, it provides guides, API references, tutorials, and best practices for all Grid Platform components.
+All human-facing guides live in this repository under `docs/`. The same tree feeds the future Docusaurus site (`docs.gridplatform.org`).
 
-## ✨ Key Features
+```text
+docs/
+  intro.md                 # Landing
+  install/
+    overview.md            # Choose VM vs Compose vs source
+    vm.md                  # Command list for a fresh VM
+    docker-compose.md      # Compose-based install
+    configuration.md       # Env vars & secrets
+  concepts/
+    overview.md
+  admin/
+    rbac.md                # Environments, groups, approvals
+  cli/
+    aws-gcp.md             # CLI generate → plan → apply
+```
 
-- **Comprehensive Guides** - Complete setup and usage instructions
-- **API Reference** - Detailed API documentation with examples
-- **Tutorials** - Step-by-step learning paths
-- **Best Practices** - Production-ready recommendations
-- **Search** - Find information quickly
-- **Versioning** - Documentation for different versions
-- **Community** - Contributing guides and support
+**Install scripts / Compose files** version with product code in [grid-core](https://github.com/gridplatform/grid-core) (`install/`). This repo documents how to use them.
 
-## 🚀 Quick Start
+The org [`.github`](https://github.com/gridplatform/.github) repo is for profile/branding only — not product docs.
+
+## Local preview
 
 ```bash
-# Clone the repository
 git clone https://github.com/gridplatform/grid-docs.git
 cd grid-docs
-
-# Install dependencies
 npm install
-
-# Start development server
 npm start
 ```
 
-## 📚 Learn More
+Open the URL printed by Docusaurus (usually `http://localhost:3000`).
 
-- **🌐 [Live Documentation](https://docs.gridplatform.org)** - Browse the full documentation
-- **💬 [Discord Community](https://discord.gg/gridplatform)** - Get help and connect with users
-- **🐛 [Report Issues](https://github.com/gridplatform/grid-docs/issues)** - Found a bug? Let us know!
+```bash
+npm run build    # production build → build/
+npm run serve    # serve the build
+```
 
-## 🤝 Contributing
+## Contributing
 
-We welcome contributions! See our [Contributing Guide](CONTRIBUTING.md) for details.
+Fork → branch → pull request against `main`. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
