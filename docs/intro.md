@@ -14,6 +14,7 @@ This repository (`grid-docs`) is the single source of truth for human-facing gui
 
 | Goal | Page |
 |------|------|
+| Create remote Terraform state (do this first) | [Remote state](./install/remote-state) |
 | Run Grid on a fresh VM | [Install on a VM](./install/vm) |
 | Run with Docker Compose | [Docker Compose](./install/docker-compose) |
 | Environment variables & secrets | [Configuration](./install/configuration) |

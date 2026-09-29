@@ -6,6 +6,11 @@ title: Install on a VM
 
 Target: Ubuntu 22.04 / 24.04, outbound HTTPS. Installer lives in **[grid-core/install](https://github.com/gridplatform/grid-core/tree/main/install)**.
 
+:::warning Remote state first
+Whether this VM is on AWS, GCP, or Azure, **create a remote Terraform state backend before applying real infra**.  
+Local state on the VM is lab-only. See **[Remote Terraform state](./remote-state)** (`s3` / `gcs` / `azurerm`), then set `GRID_TF_*` in `/etc/grid/grid.env` or Compose `.env`.
+:::
+
 ## One-liner (recommended)
 
 ```bash
