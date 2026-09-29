@@ -49,14 +49,21 @@ The CLI inherits paths when Core spawns it.
 
 If `GRID_GITOPS_REPO_URL` is set, Core clones/pulls into `GRID_CONFIG_ROOT`.
 
-## Remote Terraform state (optional)
+## Remote Terraform state (recommended for every VM)
 
-| Variable | Purpose |
-|----------|---------|
-| `GRID_TF_BACKEND` | e.g. `s3` |
-| `GRID_TF_STATE_BUCKET` | Bucket name |
-| `GRID_TF_LOCK_TABLE` | DynamoDB lock table |
-| `GRID_TF_STATE_REGION` | Region |
+Create the store **before** the first apply — [Remote state guide](./remote-state).
+
+| Variable | Backend | Purpose |
+|----------|---------|---------|
+| `GRID_TF_BACKEND` | — | `s3` \| `gcs` \| `azurerm` \| `local` (default, lab only) |
+| `GRID_TF_STATE_BUCKET` | s3, gcs | Bucket name |
+| `GRID_TF_LOCK_TABLE` | s3 | DynamoDB lock table |
+| `GRID_TF_STATE_REGION` | s3 | Region |
+| `GRID_TF_AZURE_RESOURCE_GROUP` | azurerm | Resource group |
+| `GRID_TF_AZURE_STORAGE_ACCOUNT` | azurerm | Storage account |
+| `GRID_TF_AZURE_CONTAINER` | azurerm | Blob container |
+
+Keys are **per desired-state unit** so `dependsOn` can read VPC/other outputs from remote state.
 
 ## UI
 

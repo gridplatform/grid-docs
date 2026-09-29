@@ -9,6 +9,7 @@ const sidebars: SidebarsConfig = {
       collapsed: false,
       items: [
         'install/overview',
+        'install/remote-state',
         'install/vm',
         'install/docker-compose',
         'install/configuration',

@@ -23,6 +23,10 @@ docker compose -f install/docker-compose.yml --env-file install/.env up -d --bui
 
 Open `http://<host>/`.
 
+:::warning Remote state
+Before applying infrastructure, create an S3 / GCS / Azure state store and set `GRID_TF_*` in `install/.env`. See [Remote Terraform state](./remote-state).
+:::
+
 ## Env highlights
 
 | Variable | Purpose |
