@@ -4,127 +4,81 @@ title: Install on a VM
 
 # Install on a VM
 
-Target: Ubuntu 22.04 / 24.04 (or similar), public or private IP, outbound HTTPS. This is the path for the lab VM you create with Grid (or any cheap cloud VM).
+Target: Ubuntu 22.04 / 24.04, outbound HTTPS. Installer lives in **[grid-core/install](https://github.com/gridplatform/grid-core/tree/main/install)**.
 
-:::info Packaging status
-Install artifacts (`install/install.sh`, systemd units) ship from **grid-core**. Until the first tagged release is published, use the **manual steps** below (same end state the script will automate).
-:::
+## One-liner (recommended)
 
-## Prerequisites
+```bash
+export GRID_AUTH_ADMIN_PASSWORD='choose-a-strong-password'
+curl -fsSL https://raw.githubusercontent.com/gridplatform/grid-core/main/install/install.sh | sudo -E bash
+```
+
+What it does:
+
+1. Installs Node 20 + Terraform  
+2. Clones `grid-core`, `grid-cli`, `grid-ui` into `/opt/grid`  
+3. Builds all three  
+4. Starts **grid-core** via systemd  
+5. Configures **nginx** on port 80 (UI + `/api` proxy)
+
+Open `http://<vm-ip>/` and sign in with `admin@grid.local` (or `GRID_AUTH_ADMIN_EMAIL`) and your password.
+
+### Compose on the VM instead
+
+```bash
+export GRID_USE_COMPOSE=1 GRID_AUTH_ADMIN_PASSWORD='choose-a-strong-password'
+curl -fsSL https://raw.githubusercontent.com/gridplatform/grid-core/main/install/install.sh | sudo -E bash
+```
+
+See also [Docker Compose](./docker-compose).
+
+## Prerequisites (manual path)
 
 | Need | Notes |
 |------|--------|
-| CPU / RAM | 2 vCPU, 4 GB RAM minimum; 8 GB preferred if Terraform + UI + API share the box |
+| CPU / RAM | 2 vCPU, 4 GB RAM minimum; 8 GB preferred |
 | Disk | ≥ 20 GB |
-| Ports | `80`/`443` (UI reverse proxy) and/or `3000` (API), `5173` or static UI — tighten with a firewall later |
-| Cloud creds | On the VM only if this host will **apply** Terraform (AWS/GCP keys or instance role) |
+| Ports | `80` (nginx), `3000` (API, localhost) |
+| Cloud creds | On the VM if this host will **apply** Terraform |
 
-## 1. System packages
+## Manual steps (same end state)
 
 ```bash
 sudo apt-get update
-sudo apt-get install -y curl git ca-certificates build-essential
-```
+sudo apt-get install -y curl git ca-certificates build-essential nginx
 
-Install **Node.js 20+** (NodeSource or your preferred method) and **Terraform ≥ 1.5**.
-
-```bash
-# Example: Terraform via HashiCorp apt (or download a release zip)
-terraform version
-node -v
-npm -v
-```
-
-## 2. Clone product repos
-
-```bash
+# Node 20+ and Terraform ≥ 1.5 on PATH — then:
 sudo mkdir -p /opt/grid && sudo chown "$USER":"$USER" /opt/grid
 cd /opt/grid
-
 git clone https://github.com/gridplatform/grid-core.git
-git clone https://github.com/gridplatform/grid-ui.git
 git clone https://github.com/gridplatform/grid-cli.git
-git clone https://github.com/gridplatform/grid-config.git
-# module bank is usually pulled by core from GitHub; optional local clone:
-# git clone https://github.com/gridplatform/grid-terraform.git
+git clone https://github.com/gridplatform/grid-ui.git
+
+cd grid-cli && npm ci && npm run build
+cd ../grid-core && npm ci && npm run build
+cd ../grid-ui && VITE_GRID_API_URL=/api/v1 npm ci && npm run build
 ```
 
-Pin to a tag when releases exist:
+Copy env from [`install/.env.example`](https://github.com/gridplatform/grid-core/blob/main/install/.env.example), install [`systemd/grid-core.service`](https://github.com/gridplatform/grid-core/blob/main/install/systemd/grid-core.service) and [`nginx-host.conf`](https://github.com/gridplatform/grid-core/blob/main/install/nginx-host.conf), then:
 
 ```bash
-cd /opt/grid/grid-core && git checkout v0.1.0
-# repeat for ui / cli as needed
+sudo systemctl enable --now grid-core nginx
 ```
 
-## 3. Configure grid-core
+## Configuration
+
+See [Configuration](./configuration). Defaults pull desired-state from [grid-config](https://github.com/gridplatform/grid-config) and modules from [grid-terraform](https://github.com/gridplatform/grid-terraform).
+
+## Smoke check
+
+1. `curl -fsS http://127.0.0.1/health` → `{"status":"ok"}`  
+2. UI loads; admin login works  
+3. Create a **plan** release for a cheap unit — confirm Releases + live logs  
+4. Apply only when you accept cloud cost
+
+## Pin a release
 
 ```bash
-cd /opt/grid/grid-core
-cp -n .env.example .env
+export GRID_REF=v0.1.0   # when tags exist
+curl -fsSL https://raw.githubusercontent.com/gridplatform/grid-core/${GRID_REF}/install/install.sh | sudo -E bash
 ```
-
-Edit `.env` at least:
-
-| Variable | Suggested lab value |
-|----------|---------------------|
-| `GRID_CLI_ROOT` | `/opt/grid/grid-cli` |
-| `GRID_CONFIG_ROOT` | `/opt/grid/grid-config` (or `./data/desired-state` if syncing from Git) |
-| `GRID_MODULE_BANK` | `https://github.com/gridplatform/grid-terraform.git` |
-| `GRID_MODULE_BANK_REF` | `main` (or a tag) |
-| `GRID_AUTH_ADMIN_EMAIL` | your email |
-| `GRID_AUTH_ADMIN_PASSWORD` | **change from the example** |
-| `GRID_GITOPS_REPO_URL` | optional; set if Core should pull desired-state |
-
-See [Configuration](./configuration) for the full list.
-
-## 4. Install & start API
-
-```bash
-cd /opt/grid/grid-core
-npm ci
-npm run build   # if a build script exists; else use npm run dev for lab
-npm start       # or: npm run dev
-```
-
-API default: `http://0.0.0.0:3000` (bind address depends on your start script / reverse proxy).
-
-## 5. Install & start UI
-
-```bash
-cd /opt/grid/grid-ui
-npm ci
-# point the UI at the API (see UI .env / Vite env — typically VITE_API_URL)
-npm run build && npm run preview
-# or for lab: npm run dev -- --host 0.0.0.0
-```
-
-Open the UI in a browser at the VM’s public IP (and port). Log in with the admin credentials from `.env`.
-
-## 6. Optional: systemd (production-ish)
-
-Once `install/systemd/*.service` exists in **grid-core**, enable them:
-
-```bash
-sudo cp /opt/grid/grid-core/install/systemd/*.service /etc/systemd/system/
-sudo systemctl daemon-reload
-sudo systemctl enable --now grid-core grid-ui
-```
-
-Until then, use `tmux`/`screen` or Compose ([Docker Compose](./docker-compose)).
-
-## 7. Smoke check
-
-1. UI loads; admin login works.  
-2. Admin → Sources / GitOps (or config root) shows your desired-state.  
-3. Create a **plan** release for a cheap unit (e.g. VPC in `grid-labs`) — confirm a Release row + live logs.  
-4. Apply only when you accept cloud cost.
-
-## One-liner (future)
-
-When published:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/gridplatform/grid-core/v0.1.0/install/install.sh | sudo bash
-```
-
-This page remains the narrative; the script only automates steps 1–6.

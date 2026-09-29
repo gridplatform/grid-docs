@@ -4,7 +4,15 @@ title: Configuration
 
 # Configuration
 
-Environment variables for **grid-core** (API). The CLI inherits paths when Core spawns it. Copy from [`grid-core/.env.example`](https://github.com/gridplatform/grid-core/blob/main/.env.example).
+Environment variables for **grid-core**. Prefer the install-oriented template:
+
+[`grid-core/install/.env.example`](https://github.com/gridplatform/grid-core/blob/main/install/.env.example)
+
+Developer template (same variables, more comments):
+
+[`grid-core/.env.example`](https://github.com/gridplatform/grid-core/blob/main/.env.example)
+
+The CLI inherits paths when Core spawns it.
 
 ## Required / commonly set
 
