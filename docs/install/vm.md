@@ -11,12 +11,11 @@ Whether this VM is on AWS, GCP, or Azure, **create a remote Terraform state back
 Local state on the VM is lab-only. See **[Remote Terraform state](./remote-state)** (`s3` / `gcs` / `azurerm`), then set `GRID_TF_*` in `/etc/grid/grid.env` or Compose `.env`.
 :::
 
-## Recommended: Compose on the VM
+## Recommended: Compose on the VM (default)
 
 Runs **everything in Docker** on that VM (`core` + `ui`). Same stack as [Docker Compose](./docker-compose).
 
 ```bash
-export GRID_USE_COMPOSE=1
 export GRID_AUTH_ADMIN_PASSWORD='choose-a-strong-password'
 # after creating remote state:
 # export GRID_TF_BACKEND=s3 GRID_TF_STATE_BUCKET=… GRID_TF_LOCK_TABLE=… GRID_TF_STATE_REGION=…
@@ -30,15 +29,17 @@ git clone https://github.com/gridplatform/grid-core.git
 cd grid-core
 cp install/.env.example install/.env   # password + GRID_TF_*
 docker compose -f install/docker-compose.yml --env-file install/.env up -d --build
+bash install/verify.sh
 ```
 
 Open `http://<vm-ip>/`.
 
 ## Alternative: native (systemd + nginx)
 
-No Docker. `install.sh` (default, without `GRID_USE_COMPOSE`) installs Node + Terraform, builds core/ui/cli under `/opt/grid`, starts **grid-core** via systemd, and puts **nginx** on port 80 in front of the UI + `/api` proxy.
+No Docker. Set `GRID_USE_NATIVE=1` — installs Node + Terraform, builds under `/opt/grid`, starts **grid-core** via systemd, **nginx** on port 80.
 
 ```bash
+export GRID_USE_NATIVE=1
 export GRID_AUTH_ADMIN_PASSWORD='choose-a-strong-password'
 curl -fsSL https://raw.githubusercontent.com/gridplatform/grid-core/main/install/install.sh | sudo -E bash
 ```
@@ -97,6 +98,6 @@ See [Configuration](./configuration). Defaults pull desired-state from [grid-con
 
 ```bash
 export GRID_REF=v0.1.0   # when tags exist
-export GRID_USE_COMPOSE=1 GRID_AUTH_ADMIN_PASSWORD='…'
+export GRID_AUTH_ADMIN_PASSWORD='…'
 curl -fsSL https://raw.githubusercontent.com/gridplatform/grid-core/${GRID_REF}/install/install.sh | sudo -E bash
 ```

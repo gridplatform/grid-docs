@@ -11,15 +11,15 @@ Install **scripts and Compose** live in [grid-core/install](https://github.com/g
 | Path | What runs on the VM | Guide |
 |------|---------------------|--------|
 | **Remote state first** | (cloud object store — not on the VM) | [Remote Terraform state](./remote-state) |
-| **Compose on the VM** *(recommended)* | Docker: `core` + `ui` containers | [Docker Compose](./docker-compose) / `GRID_USE_COMPOSE=1` |
-| **Native VM** (`install.sh` default) | Node processes + systemd + host nginx | [Install on a VM](./vm) |
+| **Compose on the VM** *(default / recommended)* | Docker: `core` + `ui` containers | [Docker Compose](./docker-compose) / `install.sh` |
+| **Native VM** | Node + systemd + host nginx | [Install on a VM](./vm) — `GRID_USE_NATIVE=1` |
 | **Dev from source** | `npm run dev` on your laptop | Each repo README |
 
 :::tip How does a VM actually run Grid?
 Two supported modes — pick one:
 
-1. **Compose (recommended for most VMs)** — Docker runs `grid-core` (API + CLI + Terraform inside the image) and `grid-ui` (nginx). One `docker compose up`.  
-2. **Native** — `install.sh` installs Node + Terraform on the host, runs **grid-core** under systemd, serves the UI via **nginx** (no Compose).
+1. **Compose (default)** — Docker runs `grid-core` (API + CLI + Terraform inside the image) and `grid-ui` (nginx). One `docker compose up` / default `install.sh`.  
+2. **Native** — `GRID_USE_NATIVE=1`: Node + Terraform on the host, **grid-core** under systemd, **nginx** for the UI.
 
 You do **not** need both. Compose is usually simpler to upgrade; native avoids Docker if you prefer.
 :::
