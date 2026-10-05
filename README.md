@@ -33,13 +33,14 @@ Then open `http://<host>/`. Full path: [docs/install/overview.md](docs/install/o
 
 ```text
 docs/
-  README.md                 ← section index (GitHub folder view)
-  intro.md                  ← short landing (also used if you enable Docusaurus later)
+  README.md
+  intro.md
+  organizations.md         ← org adoption
   install/
     README.md
-    overview.md             ← choose Compose vs native
-    remote-state.md         ← do this before real applies
-    vm.md                   ← VM install
+    overview.md
+    remote-state.md
+    vm.md
     docker-compose.md
     configuration.md
   concepts/overview.md
