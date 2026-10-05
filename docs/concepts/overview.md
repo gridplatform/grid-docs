@@ -33,7 +33,7 @@ Plan, apply, destroy (and custom) run as **releases** with live logs and audit. 
 
 ## Environments
 
-Canonical environments: `development`, `staging`, `production`. See [Admin RBAC](../admin/rbac) for groups, approvals, and how the website scopes writes.
+Canonical environments: `development`, `staging`, `production`. See [Admin RBAC](../admin/rbac.md) for groups, approvals, and how the website scopes writes.
 
 ## Bifurcation reminder
 

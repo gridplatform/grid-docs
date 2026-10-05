@@ -6,21 +6,22 @@ title: Grid Platform Docs
 
 # Grid Platform Docs
 
-Canonical documentation for **Grid** — the open-source infrastructure orchestration platform.
+Canonical documentation for **Grid** — open-source, self-hosted infrastructure orchestration.
 
-This repository (`grid-docs`) is the single source of truth for human-facing guides. The same Markdown tree powers local browsing today and the future site at [docs.gridplatform.org](https://docs.gridplatform.org).
+**Primary reading surface:** GitHub ([grid-docs README](https://github.com/gridplatform/grid-docs#readme)). You do not need a docs website to install or operate Grid.
 
 ## Start here
 
 | Goal | Page |
 |------|------|
-| Create remote Terraform state (do this first) | [Remote state](./install/remote-state) |
-| Run Grid on a fresh VM | [Install on a VM](./install/vm) |
-| Run with Docker Compose | [Docker Compose](./install/docker-compose) |
-| Environment variables & secrets | [Configuration](./install/configuration) |
-| How desired-state / releases work | [Concepts](./concepts/overview) |
-| Admin, environments, approvals | [Admin RBAC](./admin/rbac) |
-| CLI on AWS / GCP | [CLI: AWS & GCP](./cli/aws-gcp) |
+| Org adoption path | [Organizations](./organizations.md) |
+| Create remote Terraform state (do this first) | [Remote state](./install/remote-state.md) |
+| Run Grid on a fresh VM | [Install on a VM](./install/vm.md) |
+| Run with Docker Compose | [Docker Compose](./install/docker-compose.md) |
+| Environment variables & secrets | [Configuration](./install/configuration.md) |
+| How desired-state / releases work | [Concepts](./concepts/overview.md) |
+| Admin, environments, approvals | [Admin RBAC](./admin/rbac.md) |
+| CLI on AWS / GCP | [CLI: AWS & GCP](./cli/aws-gcp.md) |
 
 ## Product repositories
 

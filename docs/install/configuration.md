@@ -51,7 +51,7 @@ If `GRID_GITOPS_REPO_URL` is set, Core clones/pulls into `GRID_CONFIG_ROOT`.
 
 ## Remote Terraform state (recommended for every VM)
 
-Create the store **before** the first apply — [Remote state guide](./remote-state).
+Create the store **before** the first apply — [Remote state guide](./remote-state.md).
 
 | Variable | Backend | Purpose |
 |----------|---------|---------|

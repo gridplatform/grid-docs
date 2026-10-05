@@ -118,7 +118,7 @@ Restart core (or recreate the Compose stack) after changing them. Core injects t
 Order that avoids pain:
 
 1. **Create remote state** (this page)  
-2. **Install Grid** on the VM ([VM](./vm) / [Compose](./docker-compose))  
+2. **Install Grid** on the VM ([VM](./vm.md) / [Compose](./docker-compose.md))  
 3. Point GitOps at your desired-state  
 4. Plan → apply releases  
 

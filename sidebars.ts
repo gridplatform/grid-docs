@@ -1,8 +1,13 @@
 import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 
+/**
+ * Optional — used only if you run Docusaurus later.
+ * Primary reading surface is GitHub (README + docs/**/*.md).
+ */
 const sidebars: SidebarsConfig = {
   docs: [
     'intro',
+    'organizations',
     {
       type: 'category',
       label: 'Install',

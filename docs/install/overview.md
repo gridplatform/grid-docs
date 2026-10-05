@@ -10,28 +10,23 @@ Install **scripts and Compose** live in [grid-core/install](https://github.com/g
 
 | Path | What runs on the VM | Guide |
 |------|---------------------|--------|
-| **Remote state first** | (cloud object store — not on the VM) | [Remote Terraform state](./remote-state) |
-| **Compose on the VM** *(default / recommended)* | Docker: `core` + `ui` containers | [Docker Compose](./docker-compose) / `install.sh` |
-| **Native VM** | Node + systemd + host nginx | [Install on a VM](./vm) — `GRID_USE_NATIVE=1` |
+| **Remote state first** | (cloud object store — not on the VM) | [Remote Terraform state](./remote-state.md) |
+| **Compose on the VM** *(default / recommended)* | Docker: `core` + `ui` containers | [Docker Compose](./docker-compose.md) / `install.sh` |
+| **Native VM** | Node + systemd + host nginx | [Install on a VM](./vm.md) — `GRID_USE_NATIVE=1` |
 | **Dev from source** | `npm run dev` on your laptop | Each repo README |
 
-:::tip How does a VM actually run Grid?
-Two supported modes — pick one:
+> **How does a VM actually run Grid?**  
+> Two supported modes — pick one:  
+> 1. **Compose (default)** — Docker runs `grid-core` (API + CLI + Terraform inside the image) and `grid-ui` (nginx). One `docker compose up` / default `install.sh`.  
+> 2. **Native** — `GRID_USE_NATIVE=1`: Node + Terraform on the host, **grid-core** under systemd, **nginx** for the UI.  
+> You do **not** need both. Compose is usually simpler to upgrade; native avoids Docker if you prefer.
 
-1. **Compose (default)** — Docker runs `grid-core` (API + CLI + Terraform inside the image) and `grid-ui` (nginx). One `docker compose up` / default `install.sh`.  
-2. **Native** — `GRID_USE_NATIVE=1`: Node + Terraform on the host, **grid-core** under systemd, **nginx** for the UI.
-
-You do **not** need both. Compose is usually simpler to upgrade; native avoids Docker if you prefer.
-:::
-
-:::tip Order of operations
-1. Create an **S3 / GCS / Azure** state backend ([Remote state](./remote-state))  
-2. Install Grid on the VM (Compose **or** native)  
-3. Set `GRID_TF_BACKEND=…` in the control-plane `.env`  
-4. Plan / apply  
-
-Skipping remote state is OK only for a disposable laptop lab.
-:::
+> **Order of operations**  
+> 1. Create an **S3 / GCS / Azure** state backend ([Remote state](./remote-state.md))  
+> 2. Install Grid on the VM (Compose **or** native)  
+> 3. Set `GRID_TF_BACKEND=…` in the control-plane `.env`  
+> 4. Plan / apply  
+> Skipping remote state is OK only for a disposable laptop lab.
 
 ## What gets installed
 
@@ -46,8 +41,10 @@ Skipping remote state is OK only for a disposable laptop lab.
 
 Prefer a **release tag** when published (`GRID_REF=v0.1.0`). Until then, `main` is the integration branch — protect it with PR + CI.
 
+Images are **built on the host** from Dockerfiles during `compose up --build` (no required public registry yet).
+
 ## Next
 
-- [Install on a VM](./vm)  
-- [Docker Compose](./docker-compose)  
-- [Configuration](./configuration)
+- [Install on a VM](./vm.md)  
+- [Docker Compose](./docker-compose.md)  
+- [Configuration](./configuration.md)

@@ -15,6 +15,7 @@ cp install/.env.example install/.env
 # set GRID_AUTH_ADMIN_PASSWORD (required)
 
 docker compose -f install/docker-compose.yml --env-file install/.env up -d --build
+bash install/verify.sh
 ```
 
 - **core** — builds from `grid-core/Dockerfile` (embeds **grid-cli** + Terraform from GitHub)  
@@ -23,9 +24,8 @@ docker compose -f install/docker-compose.yml --env-file install/.env up -d --bui
 
 Open `http://<host>/`.
 
-:::warning Remote state
-Before applying infrastructure, create an S3 / GCS / Azure state store and set `GRID_TF_*` in `install/.env`. See [Remote Terraform state](./remote-state).
-:::
+> **Remote state**  
+> Before applying infrastructure, create an S3 / GCS / Azure state store and set `GRID_TF_*` in `install/.env`. See [Remote Terraform state](./remote-state.md).
 
 ## Env highlights
 
@@ -38,7 +38,7 @@ Before applying infrastructure, create an S3 / GCS / Azure state store and set `
 | `GRID_CLI_REF` | Branch/tag of grid-cli cloned into the core image |
 | `GRID_UI_CONTEXT` | Override UI build context (default GitHub URL) |
 
-Full list: [Configuration](./configuration) and [`install/.env.example`](https://github.com/gridplatform/grid-core/blob/main/install/.env.example).
+Full list: [Configuration](./configuration.md) and [`install/.env.example`](https://github.com/gridplatform/grid-core/blob/main/install/.env.example).
 
 ## Volumes
 
@@ -69,6 +69,8 @@ docker compose -f install/docker-compose.yml --env-file install/.env pull
 docker compose -f install/docker-compose.yml --env-file install/.env up -d --build
 ```
 
+Pre-built registry images are optional later; today installs **build from source** on the host.
+
 ## Next
 
-[Install on a VM](./vm) · [Configuration](./configuration)
+[Install on a VM](./vm.md) · [Configuration](./configuration.md)
