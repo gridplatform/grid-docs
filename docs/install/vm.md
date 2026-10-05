@@ -33,6 +33,26 @@ bash install/verify.sh
 
 Open `http://<vm-ip>/`.
 
+### Always running (survives SSH logout + reboot)
+
+`install.sh` and the Compose examples use **`docker compose … up -d`** (detached). Closing the terminal does **not** stop Grid.
+
+| Layer | What it does |
+|-------|----------------|
+| `up -d` | Process leaves your SSH session immediately |
+| `restart: unless-stopped` on `core` / `ui` | Containers restart after crash or Docker restart |
+| `systemctl enable docker` | Docker daemon starts on VM reboot |
+| `grid-compose.service` | On boot, runs `compose up -d` again (installed by `install.sh`) |
+
+Check anytime:
+
+```bash
+docker compose -f /opt/grid/grid-core/install/docker-compose.yml ps
+systemctl status grid-compose docker
+```
+
+Do **not** run `docker compose up` without `-d` on a server, and do not use `npm run dev` for production — those die when the session ends.
+
 ## Alternative: native (systemd + nginx)
 
 No Docker. Set `GRID_USE_NATIVE=1` — installs Node + Terraform, builds under `/opt/grid`, starts **grid-core** via systemd, **nginx** on port 80.

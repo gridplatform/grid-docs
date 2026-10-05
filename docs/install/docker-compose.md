@@ -18,6 +18,9 @@ docker compose -f install/docker-compose.yml --env-file install/.env up -d --bui
 bash install/verify.sh
 ```
 
+> **Always detached (`-d`).** Foreground `docker compose up` (no `-d`) stops when you close SSH.  
+> On a VM, also: `sudo systemctl enable --now docker` and optionally enable [`grid-compose.service`](https://github.com/gridplatform/grid-core/blob/main/install/systemd/grid-compose.service) so the stack returns after reboot. Containers use `restart: unless-stopped`.
+
 - **core** — builds from `grid-core/Dockerfile` (embeds **grid-cli** + Terraform from GitHub)  
 - **ui** — builds from public **grid-ui** (`Dockerfile` + nginx; proxies `/api` → `core:3000`)  
 - Publish port: `GRID_HTTP_PORT` (default **80**)
