@@ -26,8 +26,6 @@ The CLI inherits paths when Core spawns it.
 | `GRID_MODULE_BANK` | Module bank git URL or path | `https://github.com/gridplatform/grid-terraform.git` |
 | `GRID_MODULE_BANK_REF` | Branch/tag for module bank | `main` or a release tag |
 | `GRID_TERRAFORM_BIN` | Terraform binary | `terraform` |
-| `GRID_AUTO_APPROVE` | Pass `-auto-approve` on apply | `true` only for lab |
-
 ## Auth
 
 | Variable | Purpose |

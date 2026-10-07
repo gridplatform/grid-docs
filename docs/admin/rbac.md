@@ -134,15 +134,17 @@ Suggested verbs:
 
 ### When required
 
-Per-environment (and optionally per-action) policy, e.g.:
+Environments are discovered from the desired-state tree (`projects/<app>/<cloud>/<env>/…`). Any environment folder appears in **Admin → Environments**. There is no fixed limit of three environments.
 
-| Environment   | Apply / destroy        |
-|---------------|------------------------|
-| development   | auto (optional)        |
-| staging       | 1 approval from `infra-ops` or `admins` |
-| production    | 1–2 approvals; requester cannot self-approve |
+Per-environment approval is configured there (`PATCH /api/v1/environments/:slug/approval`). Admins may require approval on **any** slug, including `development` and custom names (`qa`, `preprod`, …).
 
-Ephemeral clones inherit the base env’s approval posture unless org policy tightens them.
+| Default (until overridden) | Policy |
+|----------------------------|--------|
+| Names matching staging / production | Approval required |
+| Names matching development / dev | Approval not required |
+| Other discovered names | Approval not required |
+
+Apply, destroy, and custom releases enter `pending_approval` when that environment’s policy requires approval. Plan does not. The requester cannot approve their own release. Ephemeral clones inherit the base environment policy unless overridden.
 
 ### Lifecycle
 

@@ -31,7 +31,7 @@ Install **scripts** belong in [grid-core/install](https://github.com/gridplatfor
 - Prefer short pages with tables and copy-pasteable commands
 - Use blockquotes for callouts (`> **Tip:** …`) — avoid Docusaurus-only `:::tip` so pages render on GitHub
 - Link product repos with absolute `https://github.com/gridplatform/…` URLs
-- Call out lab vs production clearly (passwords, `GRID_AUTO_APPROVE`, public IPs)
+- Call out lab vs production clearly (passwords, approval policies, public IPs)
 - Optional YAML front matter (`title:`) is fine for a future docs site
 
 ## License
