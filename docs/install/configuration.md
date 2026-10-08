@@ -53,7 +53,7 @@ Create the store **before** the first apply — [Remote state guide](./remote-st
 
 | Variable | Backend | Purpose |
 |----------|---------|---------|
-| `GRID_TF_BACKEND` | — | `s3` \| `gcs` \| `azurerm` \| `local` (default, lab only) |
+| `GRID_TF_BACKEND` | — | `s3` \| `gcs` \| `azurerm` (**required** for `npm run prod` / install). Omit / local only with `npm run dev` |
 | `GRID_TF_STATE_BUCKET` | s3, gcs | Bucket name |
 | `GRID_TF_LOCK_TABLE` | s3 | DynamoDB lock table |
 | `GRID_TF_STATE_REGION` | s3 | Region |

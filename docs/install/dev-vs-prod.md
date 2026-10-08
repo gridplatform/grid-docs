@@ -4,26 +4,39 @@ title: Development vs production
 
 # Development vs production
 
-The **env file name is the mode** — do not put `GRID_APP_ENV` / `VITE_GRID_APP_ENV` inside the file.
+The **env file name is the mode** — do not put `GRID_APP_ENV` inside the file.
 
 | Mode | Command | Env file |
 |------|---------|----------|
 | **Development** | `npm run dev` | **`.env.development` only** |
 | **Production** | `npm start` / `npm run prod` / `npm run build` | **`.env` only** |
 
-`npm run dev` / `npm start` set process `GRID_APP_ENV` (or Vite `--mode`) so the loader picks that one file. The two files are never merged.
+The two files are never mixed. There is **no override flag** for production.
 
-If `.env.development` is missing while running `npm run dev`, core/cli log a one-line fallback warning and load `.env` so a single-file checkout still boots — prefer a real `.env.development` for local work.
+## Who owns the hard production gate?
 
-Docker Compose is optional — not the default local workflow. On a VM, put settings in `.env` and run `npm start`.
+| Package | Hard gate? | Notes |
+|---------|------------|--------|
+| **grid-core** | **Yes** | API boot refuses incomplete production `.env` / injected env |
+| **grid-ui** | **Yes** | `npm run build` / `prod` requires `.env` + `VITE_GRID_API_URL` |
+| **install / Compose** | **Yes** | `check-env.sh` + `compose-up.sh`; Compose is **production-only** |
+| **grid-cli** | **No** | Add-on: Core validates then injects env via `cliChildEnv()`. `npm run build` is compile-only. Generate still errors if remote state vars are incomplete. |
 
-## Packages
+Local / laptop: **`npm run dev`** + `.env.development`.
 
-| Package | Dev | Prod |
-|---------|-----|------|
-| **grid-core** | `npm run dev` → `.env.development` | `npm start` → `.env` |
-| **grid-cli** | `npm run dev` → `.env.development` | `npm start` → `.env` |
-| **grid-ui** | `npm run dev` → `.env.development` | `npm run build` / `prod` → `.env` |
+Released module bank: `https://github.com/gridplatform/grid-terraform.git` @ **`v0.1.0`**.
+
+See [remote-state.md](./remote-state.md).
+
+## Compose (production only)
+
+```bash
+cp install/.env.example install/.env   # fill every required value
+bash install/compose-up.sh             # check-env.sh then docker compose up
+bash install/compose-up.sh release     # GHCR images
+```
+
+No development Compose profile and no skip flags.
 
 ## Where generated Terraform lives
 

@@ -16,7 +16,7 @@ Grid generates `backend.tf` and `terraform_remote_state` for `dependsOn` from th
 | `s3` | AWS S3 | DynamoDB table (`GRID_TF_LOCK_TABLE`) |
 | `gcs` | GCP Cloud Storage | GCS native |
 | `azurerm` | Azure Blob | Azure blob leases |
-| `local` | VM disk (default) | none — **lab only** |
+| `local` | VM disk | none — **development only** (`npm run dev`). Production / install refuse local state |
 
 State object key / prefix is **per unit** (path-shaped), e.g.:
 
