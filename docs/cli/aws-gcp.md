@@ -23,8 +23,11 @@ Canonical demos live under path-shaped desired-state (see [grid-config](https://
 <config-root>/archive/<cloud>/<environment>/<infra-type>/<name>/   # Terraform buffer
 ```
 
-`grid generate` writes under **`archive/`** by default (full module copy). Commit
-`archive/` with your JSON — that is the exit path if Grid is removed. Use
+`grid generate` writes under **`archive/`** by default. When `GRID_MODULE_BANK` is
+a **git URL**, modules are referenced remotely (`git::…//aws/vpc?ref=…`) and are
+**not** copied into `archive/…/modules`. Use `GRID_MODULE_SOURCE=copy` (or
+`--module-source copy`) for a self-contained vendor tree. Commit or sync the thin
+`archive/` HCL with your JSON as the exit path if Grid is removed. Use
 `-o /tmp/...` only for scratch.
 
 ## Supported paths

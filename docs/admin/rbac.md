@@ -40,21 +40,106 @@ Desired state is **path-shaped**: `<cloud>/<environment>/<infra-type>/<name>.jso
 
 ---
 
-## Bootstrap: root user
+## Bootstrap: superadmin
 
-When an organization first creates a Grid setup:
+When Grid is first installed, `GRID_AUTH_ADMIN_EMAIL` / `GRID_AUTH_ADMIN_PASSWORD` create exactly one **superadmin** (break-glass / utmost admin).
 
-1. Exactly one **root user** is provisioned (the creator / bootstrap identity).
-2. Root is permanently in the built-in **`admins`** group.
-3. Root can:
-   - open **Admin Center**
-   - create users and groups
-   - map users → groups
-   - grant group → environment → `{read, write}`
-   - configure approval policies per environment
-4. Root cannot be removed from `admins` while they are the last admin (safety rail).
+### User lifecycle (create → assign access)
 
-SSO / SAML mappings can also place people into groups; root remains the break-glass path.
+1. **Create user** → starts as **`member`** with **no access** (no projects, envs, or domains).
+2. **Admin or superadmin** grants access by doing **one** of:
+   - Assign a **predefined role**: `developer` | `maintainer` | `admin` → global access to all projects, environments, and domains.
+   - Add the user to a **custom group** (keep role as `member`) → access only from that group’s project × environment × domain grants.
+3. They can later change the predefined role and/or edit custom group membership.
+
+| Role | Who | Scope | Releases when env requires approval | Assigns users / groups |
+|------|-----|-------|--------------------------------------|-------------------------|
+| **superadmin** | Bootstrap account only | All projects & environments | **May release without approval** | Yes |
+| **admin** | Assigned by superadmin/admin | All projects & environments | Follows env approval policy | Yes |
+| **maintainer** | Assigned by admin/superadmin | All projects & environments | Follows env approval policy; **approves** others | No |
+| **developer** | Assigned by admin/superadmin | All projects & environments | Follows env approval policy | No |
+| **member** | Default for every new user | **None**, until a predefined role or custom group is assigned | Write via custom group **always** needs approval | No |
+
+Superadmin cannot be assigned through the UI. Regular admins cannot demote or disable the superadmin.
+
+Built-in groups (seeded automatically): `superadmins`, `admins`, `maintainers`, `developers`. Membership follows each user’s predefined role. These roles grant **global** access (every project and environment).
+
+### Domain permissions (extensible)
+
+Every permission grant is a **domain** level: `none` | `read` | `write`.
+
+| Domain | **read** | **write** (implies read) |
+|--------|----------|---------------------------|
+| **infrastructure** | Terraform plan / view | Apply, destroy, custom CLI |
+| **kubernetes** | View / plan workloads | Apply workload releases |
+| **monitoring** | Health, metrics, alerts | Manage monitors / policies |
+| **apm** | View APM | Manage APM config |
+| **logs** | View / search logs | Manage retention / sinks |
+| **topology** | View topology maps | Manage topology settings |
+| **secrets** | View secret metadata | Manage secret refs |
+
+New UI surfaces add a domain id to the catalog — the grant shape does not change.
+
+Built-in roles (`developer` / `maintainer` / `admin` / `superadmin`) get **write** on all catalog domains for **every** project and environment.
+
+### Custom groups = project × environment × domains
+
+When creating a custom group, pick:
+
+1. **Projects** (or `*` for all)
+2. **Environments** (or `*` for all)
+3. **Domain levels** (infrastructure, kubernetes, monitoring, …)
+
+Example:
+
+```json
+{
+  "slug": "intern-hire",
+  "name": "Intern hire",
+  "grants": [
+    {
+      "projects": ["demo-app"],
+      "environments": ["development"],
+      "domains": {
+        "infrastructure": "write",
+        "kubernetes": "read",
+        "monitoring": "read",
+        "apm": "read",
+        "logs": "read",
+        "topology": "read",
+        "secrets": "none"
+      }
+    },
+    {
+      "projects": ["demo-app"],
+      "environments": ["staging"],
+      "domains": {
+        "infrastructure": "read",
+        "topology": "read",
+        "logs": "read"
+      }
+    }
+  ],
+  "memberUserIds": ["…"]
+}
+```
+
+- New users are already **`member`** (no access). Admin/superadmin either promotes them to a predefined role **or** adds them to a custom group while leaving them as `member`.
+- Write granted via a custom group **always** requires approval (superadmin still bypasses).
+- `GET /api/v1/auth/groups` returns `domainCatalog` for Admin UI builders.
+
+### Rotate superadmin (CLI)
+
+If the superadmin password is forgotten, or you need to change the bootstrap email:
+
+```bash
+# Point --data-dir at grid-core GRID_DATA_DIR (directory that contains users.json)
+grid admin superadmin --data-dir /path/to/data
+```
+
+The CLI updates `users.json`, clears sessions, and prompts you to also update `GRID_AUTH_ADMIN_EMAIL` / `GRID_AUTH_ADMIN_PASSWORD` in your install `.env` (Compose / VM). Keeping env in sync means a container restart continues to match the same account and will not drift on a fresh data volume.
+
+Desired-state JSON is edited in Git; the console requests plan/apply/destroy releases against that state.
 
 ---
 

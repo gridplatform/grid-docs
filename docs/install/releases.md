@@ -32,7 +32,8 @@ Versions use semver: `MAJOR.MINOR.PATCH` (example: `0.1.0`).
 
 A platform release uses the **same** version on `grid-cli`, `grid-core`, and `grid-ui`. Set `package.json` `version` to that number before tagging.
 
-Optional: tag `grid-docs` and `grid-terraform` with the same git tag.
+Optional: tag `grid-docs` and **`grid-terraform`** with the same git tag (module bank
+`release.yml` publishes GitHub Release + `current` / `lts` floating tags — same pattern as `grid-cli`).
 
 ## Publish a release
 

@@ -30,8 +30,8 @@ The CLI inherits paths when Core spawns it.
 
 | Variable | Purpose |
 |----------|---------|
-| `GRID_AUTH_ADMIN_EMAIL` | Bootstrap admin |
-| `GRID_AUTH_ADMIN_PASSWORD` | **Must change** before any shared host |
+| `GRID_AUTH_ADMIN_EMAIL` | Bootstrap superadmin email |
+| `GRID_AUTH_ADMIN_PASSWORD` | Bootstrap superadmin password — **must change** before any shared host. Rotate later with `grid admin superadmin` (also update these env vars so Compose restarts stay in sync). |
 | `GRID_AUTH_SESSION_TTL_HOURS` | Session length (default often 168) |
 | `GRID_AUTH_ALLOW_REGISTER` | Public self-register (keep `false` for self-host) |
 | `GRID_AUTH_DISABLED` | Dev only — never on a public VM |
