@@ -84,7 +84,7 @@ curl -fsSL https://raw.githubusercontent.com/gridplatform/grid-core/main/install
 sudo apt-get update
 sudo apt-get install -y curl git ca-certificates build-essential nginx
 
-# Node 20+ and Terraform ≥ 1.5 on PATH — then:
+# Node 24+ and Terraform ≥ 1.5 on PATH — then:
 sudo mkdir -p /opt/grid && sudo chown "$USER":"$USER" /opt/grid
 cd /opt/grid
 git clone https://github.com/gridplatform/grid-core.git

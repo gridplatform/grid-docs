@@ -10,7 +10,7 @@ How to take a desired-state JSON from generate → plan → deploy → destroy o
 
 | Need | Notes |
 |------|--------|
-| Node 18+ | `cd grid-cli && npm install` |
+| Node 24+ | `cd grid-cli && npm install` |
 | Terraform ≥ 1.5 | on `PATH` |
 | Module bank | Sibling `../grid-terraform` or `export GRID_MODULE_BANK=/abs/path/to/grid-terraform` |
 | AWS | `aws` CLI / env credentials with rights for VPC, EC2, S3 as needed |
