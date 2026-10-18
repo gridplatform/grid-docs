@@ -2,21 +2,19 @@ import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 /**
- * GitHub Pages (project site):
- *   https://gridplatform.github.io/doc/
- *
- * Custom domain later: set `url` to the domain and `baseUrl` to `/`.
+ * Public docs: https://gridplatform.org/doc/
+ * GitHub Pages still publishes this build at https://gridplatform.github.io/doc/
  */
 const config: Config = {
   title: 'About Grid',
   tagline: 'Self-hosted orchestration — cloud, GitOps, and workloads',
   favicon: 'img/favicon-32x32.png',
 
-  url: 'https://gridplatform.github.io',
+  url: 'https://gridplatform.org',
   baseUrl: '/doc/',
 
   organizationName: 'gridplatform',
-  projectName: 'doc',
+  projectName: 'grid-docs',
   deploymentBranch: 'gh-pages',
   trailingSlash: false,
 
@@ -41,7 +39,7 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           routeBasePath: '/',
           exclude: ['**/README.md'],
-          editUrl: 'https://github.com/gridplatform/doc/edit/main/',
+          editUrl: 'https://github.com/gridplatform/grid-docs/edit/main/',
         },
         blog: false,
         theme: {

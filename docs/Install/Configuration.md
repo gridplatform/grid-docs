@@ -7,7 +7,7 @@ title: Configuration
 Environment variables for **grid-core**, install Compose, and the console.
 
 > **How to update this page**  
-> Edit [`data/configuration.json`](https://github.com/gridplatform/doc/blob/main/data/configuration.json), then run `npm run sync:config`.  
+> Edit [`data/configuration.json`](https://github.com/gridplatform/grid-docs/blob/main/data/configuration.json), then run `npm run sync:config`.  
 > Do not hand-edit the tables below — CI checks that the generated file matches the JSON.
 
 Canonical templates in product repos:

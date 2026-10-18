@@ -2,7 +2,7 @@
 
 Product documentation for [Grid Platform](https://github.com/gridplatform) — Git-backed intent, multi-cloud Terraform orchestration, Kubernetes workload GitOps (gated), console, CLI, and install.
 
-**Site:** [https://gridplatform.github.io/doc/](https://gridplatform.github.io/doc/)  
+**Site:** [https://gridplatform.org/doc/](https://gridplatform.org/doc/)  
 **Source of truth:** Markdown under [`docs/`](docs/) (also readable on GitHub).
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -57,7 +57,7 @@ npm run build
 
 GitHub Pages is updated by `.github/workflows/deploy-pages.yml`: it publishes the Docusaurus `build/` to **`gh-pages`** and points the Pages source at that branch.
 
-Site: **https://gridplatform.github.io/doc/**
+Site: **https://gridplatform.org/doc/**
 
 If the site ever shows a plain README again, Pages was switched back to `main` — re-run **Deploy docs** or set **Settings → Pages → Branch: `gh-pages` / (root)**.
 

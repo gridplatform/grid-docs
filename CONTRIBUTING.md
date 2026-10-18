@@ -4,7 +4,7 @@ Thank you for improving Grid’s documentation.
 
 ## How to contribute
 
-1. Fork [gridplatform/doc](https://github.com/gridplatform/doc)
+1. Fork [gridplatform/grid-docs](https://github.com/gridplatform/grid-docs)
 2. Branch: `git checkout -b docs/your-topic`
 3. Edit Markdown under `docs/`
 4. Env vars → edit `data/configuration.json` then `npm run sync:config`
