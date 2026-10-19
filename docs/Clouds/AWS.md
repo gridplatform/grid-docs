@@ -48,9 +48,8 @@ Provider id: `aws`. Per-service catalog: **type** (category) and **subtype** (`m
 | Compute | `gpu-instance` | `supported` | Gpu Instance (self-hosted / unmanaged) |
 | Compute | `lightsail` | `supported` | Lightsail |
 | Kubernetes cluster | `eks` | `supported` | EKS |
-| Kubernetes cluster | `eks-gpu-node-group` | `supported` | Eks Gpu Node Group (self-hosted / unmanaged) |
 | Kubernetes cluster | `eks-node-group` | `supported` | Eks Node Group |
-| Kubernetes cluster | `gpu-node-pool` | `supported` | Gpu Node Pool (self-hosted / unmanaged) |
+| Kubernetes cluster | `gpu-node-group` | `supported` | Gpu Node Group |
 | Kubernetes cluster | `karpenter` | `supported` | Karpenter (self-hosted / unmanaged) |
 | Database | `aurora` | `supported` | Aurora |
 | Database | `aurora-serverless` | `supported` | Aurora Serverless |
