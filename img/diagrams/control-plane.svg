@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 420" role="img" aria-label="Grid control plane">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="920" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B1220"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="primary" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#3B5BDB"/>
+      <stop offset="1" stop-color="#22B8CF"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#64748B"/>
+    </marker>
+  </defs>
+  <rect width="920" height="420" rx="20" fill="url(#bg)"/>
+  <text x="32" y="40" fill="#E2E8F0" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="700">Control plane</text>
+
+  <rect x="40" y="72" width="160" height="76" rx="14" fill="#152033" stroke="url(#primary)" stroke-width="1.5"/>
+  <text x="58" y="104" fill="#F8FAFC" font-family="Inter, system-ui, sans-serif" font-size="15" font-weight="600">grid-ui</text>
+  <text x="58" y="126" fill="#94A3B8" font-family="Inter, system-ui, sans-serif" font-size="12">Console</text>
+
+  <path d="M210 110 H250" stroke="#64748B" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+
+  <rect x="260" y="72" width="180" height="76" rx="14" fill="#152033" stroke="url(#primary)" stroke-width="1.5"/>
+  <text x="278" y="104" fill="#F8FAFC" font-family="Inter, system-ui, sans-serif" font-size="15" font-weight="600">grid-core</text>
+  <text x="278" y="126" fill="#94A3B8" font-family="Inter, system-ui, sans-serif" font-size="12">API / Sync / Releases</text>
+
+  <path d="M450 110 H490" stroke="#64748B" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+
+  <rect x="500" y="72" width="160" height="76" rx="14" fill="#152033" stroke="#334155" stroke-width="1.5"/>
+  <text x="518" y="104" fill="#F8FAFC" font-family="Inter, system-ui, sans-serif" font-size="15" font-weight="600">Engines</text>
+  <text x="518" y="126" fill="#94A3B8" font-family="Inter, system-ui, sans-serif" font-size="12">TF / k8s GitOps</text>
+
+  <path d="M670 110 H710" stroke="#64748B" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+
+  <rect x="720" y="72" width="160" height="76" rx="14" fill="#152033" stroke="#334155" stroke-width="1.5"/>
+  <text x="738" y="104" fill="#F8FAFC" font-family="Inter, system-ui, sans-serif" font-size="15" font-weight="600">Targets</text>
+  <text x="738" y="126" fill="#94A3B8" font-family="Inter, system-ui, sans-serif" font-size="12">cloud / cluster</text>
+
+  <path d="M350 148 V196" stroke="#64748B" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+
+  <rect x="200" y="206" width="300" height="84" rx="14" fill="#152033" stroke="#334155" stroke-width="1.5"/>
+  <text x="220" y="242" fill="#F8FAFC" font-family="Inter, system-ui, sans-serif" font-size="15" font-weight="600">Your intent Git repo</text>
+  <text x="220" y="264" fill="#94A3B8" font-family="Inter, system-ui, sans-serif" font-size="12">projects / cloud / env / type / unit.json</text>
+
+  <path d="M500 248 H560" stroke="#64748B" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+
+  <rect x="570" y="206" width="280" height="84" rx="14" fill="#152033" stroke="#334155" stroke-width="1.5"/>
+  <text x="590" y="242" fill="#F8FAFC" font-family="Inter, system-ui, sans-serif" font-size="15" font-weight="600">State + archive / GitOps</text>
+  <text x="590" y="264" fill="#94A3B8" font-family="Inter, system-ui, sans-serif" font-size="12">TF backends / Argo when on</text>
+
+  <path d="M350 290 V336" stroke="#64748B" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+
+  <rect x="200" y="346" width="300" height="50" rx="14" fill="#152033" stroke="#22B8CF" stroke-width="1.5"/>
+  <text x="220" y="377" fill="#F8FAFC" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600">Host Prometheus / Alertmanager</text>
+</svg>
